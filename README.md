@@ -12,6 +12,10 @@ npm i
 npm run dev
 ```
 
+## Development Documentation
+
+https://www.craft.do/s/oySXofo3XLqXRC
+
 ## Task
 
 ### Requirements
