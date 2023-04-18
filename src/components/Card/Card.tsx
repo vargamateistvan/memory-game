@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { CardBack, CardFront } from './card.style';
+import { CardBack, CardFront, CardWrapper } from './card.style';
 
 type Props = {
   card: CardType;
@@ -20,9 +20,9 @@ const Card = ({ card, index, flipped, found, flipCard }: Props) => {
   }, [index, flipCard]);
 
   return (
-    <div onClick={handleOnClick}>
+    <CardWrapper onClick={handleOnClick}>
       {flipped || found ? <CardFront imageUrl={card.imageUrl} /> : <CardBack />}
-    </div>
+    </CardWrapper>
   );
 };
 

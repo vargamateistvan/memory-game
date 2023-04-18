@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Container, Divider, Grid } from '@mui/material';
 import GameContainer from '../containers/GameContainer';
 import Card, { CardType } from '../components/Card/Card';
 import { getCardImages } from '../utils/images';
@@ -19,8 +20,9 @@ const Game = () => {
     checkMatch();
   }, [flippedCards]);
 
-  const createDeck = useCallback(async () => {
-    const images = await getCardImages();
+  const createDeck = useCallback(async (decksize = 8) => {
+    resetGame();
+    const images = await getCardImages(decksize / 2);
     const cardImages = [...images, ...images];
     cardImages.sort(() => Math.random() - 0.5);
 
@@ -65,34 +67,47 @@ const Game = () => {
   );
 
   const resetGame = useCallback(() => {
-    createDeck();
     setFlippedCards([]);
     setFoundCards([]);
     setMoves(0);
   }, []);
 
   return (
-    <MainContainer>
-      <Header moves={moves} foundCards={foundCards} reset={resetGame} />
+    <Container component="main">
+      <Header
+        moves={moves}
+        foundCards={foundCards}
+        reset={resetGame}
+        start={createDeck}
+      />
+      <Divider />
       {isOver ? (
         <div>Game over</div>
       ) : (
-        <GameContainer>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={3}
+        >
           {cards.map((card: CardType, index: number) => {
             return (
-              <Card
-                key={index}
-                card={card}
-                index={index}
-                flipped={flippedCards.includes(card)}
-                found={foundCards.includes(card)}
-                flipCard={flipCard}
-              ></Card>
+              <Grid item key={index}>
+                <Card
+                  key={index}
+                  card={card}
+                  index={index}
+                  flipped={flippedCards.includes(card)}
+                  found={foundCards.includes(card)}
+                  flipCard={flipCard}
+                ></Card>
+              </Grid>
             );
           })}
-        </GameContainer>
+        </Grid>
       )}
-    </MainContainer>
+    </Container>
   );
 };
 

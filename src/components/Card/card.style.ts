@@ -11,19 +11,22 @@ const Card = styled.div`
   height: 150px;
   border: 1px solid black;
   border-radius: 5px;
-  transition: '0.6s',
-	transformStyle: 'preserve-3d',
+`;
+
+export const CardWrapper = styled.div`
+  transition: 0.5s;
+  transform-style: preserve-3d;
 `;
 
 export const CardBack = styled(Card)`
   background-size: contain;
   background-image: url('/img/card-back2.png');
   background-color: #3f9191;
-  transform: 'rotateY(180deg)';
+  transform: rotateY(180deg);
 `;
 
 export const CardFront = styled(Card)<CardFrontProps>`
   background-size: cover;
   background-image: url('${({ imageUrl }) => imageUrl}');
-  transform: 'rotateY(0deg)';
+  transform: rotateY(0deg);
 `;
