@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import GameContainer from '../components/GameContainer';
+import GameContainer from '../containers/GameContainer';
 import Card, { CardType } from '../components/Card/Card';
 import { getCardImages } from '../utils/images';
 import Header from '../components/Header';
+import MainContainer from '../containers/MainContainer';
 
 const Game = () => {
   const [cards, setCards] = useState<CardType[]>([]);
@@ -63,9 +64,16 @@ const Game = () => {
     [cards, foundCards]
   );
 
+  const resetGame = useCallback(() => {
+    createDeck();
+    setFlippedCards([]);
+    setFoundCards([]);
+    setMoves(0);
+  }, []);
+
   return (
-    <div>
-      <Header moves={moves} foundCards={foundCards} />
+    <MainContainer>
+      <Header moves={moves} foundCards={foundCards} reset={resetGame} />
       {isOver ? (
         <div>Game over</div>
       ) : (
@@ -84,7 +92,7 @@ const Game = () => {
           })}
         </GameContainer>
       )}
-    </div>
+    </MainContainer>
   );
 };
 
