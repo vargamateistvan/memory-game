@@ -17,6 +17,7 @@ const Game = () => {
   }, []);
 
   useEffect(() => {
+    if (flippedCards.length !== 2) return;
     checkMatch();
   }, [flippedCards]);
 
