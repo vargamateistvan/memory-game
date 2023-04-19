@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { Container, Divider, Grid } from '@mui/material';
+import { Container, Divider, Grid, Typography } from '@mui/material';
 import Card, { CardType } from '../components/Card/Card';
 import { getCardImages } from '../utils/images';
 import Header from '../components/Header';
 import useStateContext from '../state/context/state/use-state-context';
 import useDispatchContext from '../state/context/dispatch/use-dispatch-context';
+import MainContainer from '../containers/MainContainer';
 
 const Game = () => {
   const { cards, flippedCards, foundCards } = useStateContext();
@@ -19,14 +20,10 @@ const Game = () => {
     checkMatch();
   }, [flippedCards]);
 
-  const createDeck = useCallback(async (deckSize = 8) => {
+  const createDeck = useCallback(async (deckSize = 12) => {
     dispatch({ type: 'RESET_GAME' });
     const images = await getCardImages(deckSize / 2);
     dispatch({ type: 'START_GAME', deckSize, images });
-  }, []);
-
-  const flipCard = useCallback((index: number) => {
-    dispatch({ type: 'FLIP_CARD', index });
   }, []);
 
   const checkMatch = useCallback(() => {
@@ -43,17 +40,21 @@ const Game = () => {
 
   return (
     <Container component="main">
-      <Header />
-      <Divider />
-      {isOver ? (
-        <div>Game over</div>
-      ) : (
+      <MainContainer elevation={3}>
+        <Header />
+        <Divider />
+        {isOver && (
+          <Typography variant="h5">
+            You have found the all card pairs
+          </Typography>
+        )}
         <Grid
           container
           direction="row"
           justifyContent="center"
           alignItems="center"
           spacing={3}
+          sx={{ pt: 2 }}
         >
           {cards.map((card: CardType, index: number) => {
             return (
@@ -63,7 +64,7 @@ const Game = () => {
             );
           })}
         </Grid>
-      )}
+      </MainContainer>
     </Container>
   );
 };

@@ -29,8 +29,11 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #004040;
-  color: #3F9191
+  background-image: url('https://secure.img1-fg.wfcdn.com/im/26048522/compr-r85/2332/233263036/arjuna-peel-stick-wallpaper.jpg');
+  color: #271306;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 h1 {
