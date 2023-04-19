@@ -72,6 +72,7 @@ const Header = ({ moves, foundCards, reset, start }: Props) => {
 
           <Button
             variant="outlined"
+            size="medium"
             onClick={resetGame}
             startIcon={<RestartAlt />}
             sx={{ mr: 2 }}
@@ -80,6 +81,7 @@ const Header = ({ moves, foundCards, reset, start }: Props) => {
           </Button>
           <Button
             variant="contained"
+            size="medium"
             onClick={startGame}
             startIcon={<PlayArrow />}
           >
