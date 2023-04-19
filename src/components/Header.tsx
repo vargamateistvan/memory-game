@@ -10,22 +10,26 @@ import {
   MenuItem,
 } from '@mui/material';
 import { PlayArrow, RestartAlt } from '@mui/icons-material';
-import { CardType } from './Card/Card';
-
-type Props = {
-  moves: number;
-  foundCards: CardType[];
-  start: Function;
-  reset: Function;
-};
+import useStateContext from '../state/context/state/use-state-context';
+import useDispatchContext from '../state/context/dispatch/use-dispatch-context';
+import { getCardImages } from '../utils/images';
 
 const deckSizes = [4, 8, 12, 16, 20, 24];
 
-const Header = ({ moves, foundCards, reset, start }: Props) => {
+const Header = () => {
   const [deckSize, setDeckSize] = useState<number>(8);
 
-  const resetGame = useCallback(() => reset(), [reset]);
-  const startGame = useCallback(() => start(deckSize), [start, deckSize]);
+  const { foundCards, moves } = useStateContext();
+  const dispatch = useDispatchContext();
+
+  const resetGame = useCallback(() => {
+    dispatch({ type: 'RESET_GAME' });
+  }, []);
+
+  const startGame = useCallback(async () => {
+    const images = await getCardImages(deckSize / 2);
+    dispatch({ type: 'START_GAME', deckSize, images });
+  }, [deckSize]);
 
   const handleChange = useCallback((event: SelectChangeEvent) => {
     setDeckSize(parseInt(event.target.value));
@@ -56,6 +60,7 @@ const Header = ({ moves, foundCards, reset, start }: Props) => {
         >
           Start
         </Button>
+
         <InputLabel id="select-label">Number of pairs</InputLabel>
         <Select
           labelId="select-label"

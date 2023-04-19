@@ -1,12 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { CardBack, CardFront, CardWrapper } from './card.style';
+import useStateContext from '../../state/context/state/use-state-context';
+import useDispatchContext from '../../state/context/dispatch/use-dispatch-context';
 
 type Props = {
   card: CardType;
   index: number;
-  flipped: boolean;
-  found: boolean;
-  flipCard: Function;
 };
 
 export type CardType = {
@@ -14,13 +13,20 @@ export type CardType = {
   id: number;
 };
 
-const Card = ({ card, index, flipped, found, flipCard }: Props) => {
-  const handleOnClick = useCallback(() => {
-    flipCard(index);
-  }, [index, flipCard]);
+const Card = ({ card, index }: Props) => {
+  const { flippedCards, foundCards } = useStateContext();
+  const dispatch = useDispatchContext();
+
+  const flipCard = useCallback(() => {
+    dispatch({ type: 'FLIP_CARD', index });
+  }, []);
+
+  const flipped = useMemo(() => flippedCards.includes(card), [flippedCards]);
+
+  const found = useMemo(() => foundCards.includes(card), [foundCards]);
 
   return (
-    <CardWrapper onClick={handleOnClick}>
+    <CardWrapper onClick={flipCard}>
       {flipped || found ? <CardFront imageUrl={card.imageUrl} /> : <CardBack />}
     </CardWrapper>
   );
