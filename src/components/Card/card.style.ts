@@ -19,9 +19,15 @@ export const CardWrapper = styled.div`
 `;
 
 export const CardBack = styled(Card)`
-  background-size: contain;
-  background-image: url('/img/card-back2.png');
-  background-color: #3f9191;
+  background-color: #271306;
+  opacity: 0.8;
+  background-image: linear-gradient(135deg, #43f7d0 25%, transparent 25%),
+    linear-gradient(225deg, #43f7d0 25%, transparent 25%),
+    linear-gradient(45deg, #43f7d0 25%, transparent 25%),
+    linear-gradient(315deg, #43f7d0 25%, #271306 25%);
+  background-position: 10px 0, 10px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat;
   transform: rotateY(180deg);
 `;
 

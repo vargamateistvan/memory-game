@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Container, Divider, Grid } from '@mui/material';
+import { Container, Divider, Grid, Typography } from '@mui/material';
 import GameContainer from '../containers/GameContainer';
 import Card, { CardType } from '../components/Card/Card';
 import { getCardImages } from '../utils/images';
@@ -21,7 +21,7 @@ const Game = () => {
     checkMatch();
   }, [flippedCards]);
 
-  const createDeck = useCallback(async (decksize = 8) => {
+  const createDeck = useCallback(async (decksize = 12) => {
     resetGame();
     const images = await getCardImages(decksize / 2);
     const cardImages = [...images, ...images];
@@ -75,22 +75,26 @@ const Game = () => {
 
   return (
     <Container component="main">
-      <Header
-        moves={moves}
-        foundCards={foundCards}
-        reset={resetGame}
-        start={createDeck}
-      />
-      <Divider />
-      {isOver ? (
-        <div>Game over</div>
-      ) : (
+      <MainContainer elevation={3}>
+        <Header
+          moves={moves}
+          foundCards={foundCards}
+          reset={resetGame}
+          start={createDeck}
+        />
+        <Divider />
+        {isOver && (
+          <Typography variant="h5">
+            You have found the all card pairs
+          </Typography>
+        )}
         <Grid
           container
           direction="row"
           justifyContent="center"
           alignItems="center"
           spacing={3}
+          sx={{ pt: 2 }}
         >
           {cards.map((card: CardType, index: number) => {
             return (
@@ -107,7 +111,7 @@ const Game = () => {
             );
           })}
         </Grid>
-      )}
+      </MainContainer>
     </Container>
   );
 };
