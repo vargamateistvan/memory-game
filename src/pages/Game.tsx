@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Box, Container, Divider, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import Card, { CardType } from '../components/Card/Card';
 import { getCardImages } from '../utils/images';
 import Header from '../components/Header';
@@ -63,7 +63,7 @@ const Game = () => {
   }, [flippedCards]);
 
   const isOver = useMemo(
-    () => cards.length && cards.length === foundCards.length,
+    () => cards.length > 0 && cards.length === foundCards.length,
     [cards, foundCards]
   );
 
@@ -83,12 +83,12 @@ const Game = () => {
           start={createDeck}
           isOver={isOver}
         />
-        <Divider />
         {isOver && (
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
+            flexWrap="wrap"
             sx={{ pt: 2 }}
           >
             <GifContainer />
@@ -108,7 +108,7 @@ const Game = () => {
           justifyContent="center"
           alignItems="center"
           spacing={3}
-          sx={{ pt: 2 }}
+          sx={{ pt: 2, pl: 1, pr: 1 }}
         >
           {cards.map((card: CardType, index: number) => {
             return (

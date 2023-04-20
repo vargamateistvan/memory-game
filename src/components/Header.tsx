@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import {
   Box,
   Button,
+  Container,
+  Card,
   Typography,
   Divider,
   InputLabel,
@@ -34,63 +36,78 @@ const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
   }, []);
 
   return (
-    <Box>
-      <Typography variant="h5" sx={{ pb: 2 }}>
-        Memory game
+    <Container>
+      <Typography variant="h5" sx={{ pb: 2, color: '#43f7d0' }}>
+        Cat Memory game
       </Typography>
       <Divider />
-      <Box display="flex" justifyContent="space-between" sx={{ pt: 2, pb: 2 }}>
-        <Box>
-          <Typography variant="subtitle1">Moves: {moves}</Typography>
-          <Typography variant="subtitle1">
-            Founded Pairs: {foundCards.length / 2} / {deckSize / 2}
-          </Typography>
-          <Typography variant="subtitle1">Deck size: {deckSize}</Typography>
-        </Box>
-
-        <Box
-          display="flex"
-          alignContent="center"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ width: 500 }}
+      <Box display="flex" alignContent="center" alignItems="center">
+        <Button
+          variant="contained"
+          size="medium"
+          onClick={startGame}
+          startIcon={<PlayArrow />}
+          sx={{ mr: 2, color: '#43f7d0', backgroundColor: '#271306' }}
         >
-          <FormControl size="medium" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="select-label">Number of pairs</InputLabel>
-            <Select
-              labelId="select-label"
-              value={deckSize.toString()}
-              label="Number of pairs"
-              onChange={handleChange}
-            >
-              {deckSizes.map((size) => (
-                <MenuItem key={size} value={size.toString()}>
-                  {size}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Button
-            variant="outlined"
-            size="medium"
-            onClick={resetGame}
-            startIcon={<RestartAlt />}
-            sx={{ mr: 2 }}
+          {isOver ? 'Restart' : 'Start'}
+        </Button>
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={resetGame}
+          startIcon={<RestartAlt />}
+          sx={{ color: '#271306', backgroundColor: '#43f7d0' }}
+        >
+          Reset
+        </Button>
+        <Box flexGrow={1} />
+        <FormControl
+          size="medium"
+          sx={{ m: 1, minWidth: 120, color: '#43f7d0' }}
+        >
+          <InputLabel id="select-label">Number of pairs</InputLabel>
+          <Select
+            labelId="select-label"
+            value={deckSize.toString()}
+            label="Number of pairs"
+            onChange={handleChange}
           >
-            Reset
-          </Button>
-          <Button
-            variant="contained"
-            size="medium"
-            onClick={startGame}
-            startIcon={<PlayArrow />}
-          >
-            {isOver ? 'Restart' : 'Start'}
-          </Button>
-        </Box>
+            {deckSizes.map((size) => (
+              <MenuItem key={size} value={size.toString()}>
+                {size}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
-    </Box>
+
+      <Box display="flex" justifyContent="space-between">
+        <Card
+          sx={{
+            p: 1,
+            width: '100%',
+            mr: 2,
+            backgroundColor: '#43f7d0',
+            color: '#271306',
+          }}
+        >
+          <Typography variant="subtitle1">Moves: {moves}</Typography>
+        </Card>
+        <Card
+          sx={{
+            p: 1,
+            width: '100%',
+            backgroundColor: '#43f7d0',
+            color: '#271306',
+          }}
+        >
+          <Typography variant="subtitle1">
+            Found Pairs: {foundCards.length / 2} / {deckSize / 2}
+          </Typography>
+        </Card>
+      </Box>
+      <Divider sx={{ pb: 2 }} />
+    </Container>
   );
 };
 
