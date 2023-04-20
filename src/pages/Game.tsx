@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Container, Divider, Grid, Typography } from '@mui/material';
-import GameContainer from '../containers/GameContainer';
+import { Box, Container, Divider, Grid, Typography } from '@mui/material';
 import Card, { CardType } from '../components/Card/Card';
 import { getCardImages } from '../utils/images';
 import Header from '../components/Header';
 import MainContainer from '../containers/MainContainer';
+import GifContainer from '../containers/GifContainer';
 
 const Game = () => {
   const [cards, setCards] = useState<CardType[]>([]);
@@ -63,7 +63,7 @@ const Game = () => {
   }, [flippedCards]);
 
   const isOver = useMemo(
-    () => cards.length === foundCards.length,
+    () => cards.length && cards.length === foundCards.length,
     [cards, foundCards]
   );
 
@@ -81,12 +81,26 @@ const Game = () => {
           foundCards={foundCards}
           reset={resetGame}
           start={createDeck}
+          isOver={isOver}
         />
         <Divider />
         {isOver && (
-          <Typography variant="h5">
-            You have found the all card pairs
-          </Typography>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ pt: 2 }}
+          >
+            <GifContainer />
+            <Typography
+              variant="h5"
+              textAlign="center"
+              sx={{ pt: 2, pl: 1, pr: 1 }}
+            >
+              You have found all the pairs of cards
+            </Typography>
+            <GifContainer />
+          </Box>
         )}
         <Grid
           container

@@ -18,11 +18,12 @@ type Props = {
   foundCards: CardType[];
   start: Function;
   reset: Function;
+  isOver: boolean;
 };
 
 const deckSizes = [6, 12, 18, 24, 30];
 
-const Header = ({ moves, foundCards, reset, start }: Props) => {
+const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
   const [deckSize, setDeckSize] = useState<number>(12);
 
   const resetGame = useCallback(() => reset(), [reset]);
@@ -34,7 +35,7 @@ const Header = ({ moves, foundCards, reset, start }: Props) => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ pt: 2, pb: 2 }}>
+      <Typography variant="h5" sx={{ pb: 2 }}>
         Memory game
       </Typography>
       <Divider />
@@ -85,7 +86,7 @@ const Header = ({ moves, foundCards, reset, start }: Props) => {
             onClick={startGame}
             startIcon={<PlayArrow />}
           >
-            Start
+            {isOver ? 'Restart' : 'Start'}
           </Button>
         </Box>
       </Box>
