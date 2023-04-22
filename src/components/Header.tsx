@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import {
   Box,
   Button,
+  Container,
+  Card,
   Typography,
   Divider,
   InputLabel,
@@ -14,6 +16,7 @@ import { PlayArrow, RestartAlt } from '@mui/icons-material';
 import useStateContext from '../state/context/state/use-state-context';
 import useDispatchContext from '../state/context/dispatch/use-dispatch-context';
 import { getCardImages } from '../utils/images';
+import colors from '../theme/colors';
 
 const deckSizes = [6, 12, 18, 24, 30];
 
@@ -37,61 +40,96 @@ const Header = () => {
   }, []);
 
   return (
-    <Box>
-      <Typography variant="h5" sx={{ pt: 2, pb: 2 }}>
-        Memory game
+    <Container>
+      <Typography variant="h5" sx={{ pb: 2, color: colors.green }}>
+        Cat Memory game
       </Typography>
       <Divider />
-      <Box display="flex" justifyContent="space-between" sx={{ pt: 2, pb: 2 }}>
-        <Box>
-          <Typography variant="subtitle1">Moves: {moves}</Typography>
-          <Typography variant="subtitle1">
-            Founded Pairs: {foundCards.length / 2} / {deckSize / 2}
-          </Typography>
-          <Typography variant="subtitle1">Deck size: {deckSize}</Typography>
-        </Box>
-
-        <Box
-          display="flex"
-          alignContent="center"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ width: 500 }}
+      <Box display="flex" alignContent="center" alignItems="center">
+        <Button
+          variant="contained"
+          size="medium"
+          onClick={startGame}
+          startIcon={<PlayArrow />}
+          sx={{ mr: 2, color: colors.brown, backgroundColor: colors.green }}
         >
-          <FormControl size="medium" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="select-label">Number of pairs</InputLabel>
-            <Select
-              labelId="select-label"
-              value={deckSize.toString()}
-              label="Number of pairs"
-              onChange={handleChange}
-            >
-              {deckSizes.map((size) => (
-                <MenuItem key={size} value={size.toString()}>
-                  {size}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Button
-            variant="outlined"
-            onClick={resetGame}
-            startIcon={<RestartAlt />}
-            sx={{ mr: 2 }}
+          Start
+        </Button>
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={resetGame}
+          startIcon={<RestartAlt />}
+          sx={{ color: colors.green, backgroundColor: colors.brown }}
+        >
+          Reset
+        </Button>
+        <Box flexGrow={1} />
+        <FormControl
+          size="medium"
+          sx={{ m: 1, minWidth: 120, color: colors.brown }}
+        >
+          <InputLabel
+            id="select-label"
+            sx={{
+              color: colors.green,
+            }}
           >
-            Reset
-          </Button>
-          <Button
-            variant="contained"
-            onClick={startGame}
-            startIcon={<PlayArrow />}
+            Number of pairs
+          </InputLabel>
+          <Select
+            labelId="select-label"
+            value={deckSize.toString()}
+            label="Number of pairs"
+            onChange={handleChange}
+            sx={{
+              color: colors.green,
+              backgroundColor: colors.brown,
+            }}
           >
-            Start
-          </Button>
-        </Box>
+            {deckSizes.map((size) => (
+              <MenuItem
+                key={size}
+                value={size.toString()}
+                sx={{
+                  color: colors.green,
+                  backgroundColor: colors.brown,
+                }}
+              >
+                {size}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
-    </Box>
+
+      <Box display="flex" justifyContent="space-between">
+        <Card
+          sx={{
+            p: 1,
+            width: '100%',
+            mr: 2,
+            color: colors.brown,
+            backgroundColor: colors.green,
+          }}
+        >
+          <Typography variant="subtitle1">Moves: {moves}</Typography>
+        </Card>
+        <Card
+          sx={{
+            p: 1,
+            width: '100%',
+            color: colors.brown,
+            backgroundColor: colors.green,
+          }}
+        >
+          <Typography variant="subtitle1">
+            Found Pairs: {foundCards.length / 2} / {deckSize / 2}
+          </Typography>
+        </Card>
+      </Box>
+      <Divider sx={{ pb: 2 }} />
+    </Container>
   );
 };
 

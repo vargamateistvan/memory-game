@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { CardBack, CardFront, CardWrapper } from './card.style';
+import { CardBack, CardFront, CardWrapper, Flipper } from './card.style';
 import useStateContext from '../../state/context/state/use-state-context';
 import useDispatchContext from '../../state/context/dispatch/use-dispatch-context';
 
@@ -27,7 +27,10 @@ const Card = ({ card, index }: Props) => {
 
   return (
     <CardWrapper onClick={flipCard}>
-      {flipped || found ? <CardFront imageUrl={card.imageUrl} /> : <CardBack />}
+      <Flipper flipped={flipped || found}>
+        <CardFront imageUrl={card.imageUrl} />
+        <CardBack />
+      </Flipper>
     </CardWrapper>
   );
 };
