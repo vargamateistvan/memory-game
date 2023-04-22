@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { PlayArrow, RestartAlt } from '@mui/icons-material';
 import { CardType } from './Card/Card';
+import colors from '../theme/colors';
 
 type Props = {
   moves: number;
@@ -37,7 +38,7 @@ const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
 
   return (
     <Container>
-      <Typography variant="h5" sx={{ pb: 2, color: '#43f7d0' }}>
+      <Typography variant="h5" sx={{ pb: 2, color: colors.green }}>
         Cat Memory game
       </Typography>
       <Divider />
@@ -47,7 +48,7 @@ const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
           size="medium"
           onClick={startGame}
           startIcon={<PlayArrow />}
-          sx={{ mr: 2, color: '#43f7d0', backgroundColor: '#271306' }}
+          sx={{ mr: 2, color: colors.brown, backgroundColor: colors.green }}
         >
           {isOver ? 'Restart' : 'Start'}
         </Button>
@@ -56,24 +57,42 @@ const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
           size="medium"
           onClick={resetGame}
           startIcon={<RestartAlt />}
-          sx={{ color: '#271306', backgroundColor: '#43f7d0' }}
+          sx={{ color: colors.green, backgroundColor: colors.brown }}
         >
           Reset
         </Button>
         <Box flexGrow={1} />
         <FormControl
           size="medium"
-          sx={{ m: 1, minWidth: 120, color: '#43f7d0' }}
+          sx={{ m: 1, minWidth: 120, color: colors.brown }}
         >
-          <InputLabel id="select-label">Number of pairs</InputLabel>
+          <InputLabel
+            id="select-label"
+            sx={{
+              color: colors.green,
+            }}
+          >
+            Number of pairs
+          </InputLabel>
           <Select
             labelId="select-label"
             value={deckSize.toString()}
             label="Number of pairs"
             onChange={handleChange}
+            sx={{
+              color: colors.green,
+              backgroundColor: colors.brown,
+            }}
           >
             {deckSizes.map((size) => (
-              <MenuItem key={size} value={size.toString()}>
+              <MenuItem
+                key={size}
+                value={size.toString()}
+                sx={{
+                  color: colors.green,
+                  backgroundColor: colors.brown,
+                }}
+              >
                 {size}
               </MenuItem>
             ))}
@@ -87,8 +106,8 @@ const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
             p: 1,
             width: '100%',
             mr: 2,
-            backgroundColor: '#43f7d0',
-            color: '#271306',
+            color: colors.brown,
+            backgroundColor: colors.green,
           }}
         >
           <Typography variant="subtitle1">Moves: {moves}</Typography>
@@ -97,8 +116,8 @@ const Header = ({ moves, foundCards, reset, start, isOver }: Props) => {
           sx={{
             p: 1,
             width: '100%',
-            backgroundColor: '#43f7d0',
-            color: '#271306',
+            color: colors.brown,
+            backgroundColor: colors.green,
           }}
         >
           <Typography variant="subtitle1">
